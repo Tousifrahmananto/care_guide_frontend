@@ -30,8 +30,3 @@ The agreed JWT storage is `localStorage` under `secureNotesToken`. It survives r
 
 Any script executing in this origin can read a stored token. Plain text rendering (`textContent`), no third-party scripts and no HTML injection reduce exposure but do not make localStorage immune to XSS or compromised hosting. Use HTTPS for deployment. An HttpOnly-cookie design would require an explicit authentication/CSRF contract change and is not added here. Browser storage must be enabled for persistent sign-in. Forgot-password/email delivery is outside the assessment scope.
 
-## Verification and next task
-
-Backend native tests cover exact-origin CORS, browser preflights and readable errors. Task 9 also runs the real separately served frontend against an isolated local MongoDB-backed API in Chromium; evidence and detailed walkthrough remain outside both repositories in `../notes-api-study/09-frontend.md` and `../development/`.
-
-Task 10 handles deployment, final run/submission documentation and the four submission links. No live URL, Git commit or push is created by this frontend task.
