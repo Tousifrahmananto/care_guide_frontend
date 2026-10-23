@@ -70,3 +70,7 @@ The live frontend and backend addresses are not configured yet. After configurin
 | Private views disappear | Token expired, account was deleted or the stored login changed in another tab |
 | Admin controls are missing | Confirm the account's current role; refresh the account after role changes |
 | Sign-in cannot persist | Enable browser storage for this origin |
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> fb72270c54ae1531b5e3d690e702250e52d5f37e
