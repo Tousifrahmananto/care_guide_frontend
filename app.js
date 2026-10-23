@@ -92,6 +92,11 @@ function logout() {
 }
 
 async function api(path, { method = 'GET', body, auth = true } = {}) {
+  const localHosts = ['localhost', '127.0.0.1', '[::1]'];
+  const apiUrl = new URL(API_BASE_URL);
+  if (!localHosts.includes(location.hostname) && (apiUrl.protocol !== 'https:' || localHosts.includes(apiUrl.hostname))) {
+    throw new Error('Set the public HTTPS backend URL in config.js before deploying this frontend.');
+  }
   const requestedToken = token;
   const response = await fetch(`${API_BASE_URL}${path}`, {
     method, credentials: 'omit', cache: 'no-store',
