@@ -2,6 +2,8 @@
 
 Browser client for Secure Notes, built with plain HTML, CSS and JavaScript. It connects to the separate [backend API](https://github.com/Tousifrahmananto/care_guide_backend) and has no package installation or build step. Frontend repository: [care_guide_frontend](https://github.com/Tousifrahmananto/care_guide_frontend).
 
+Hosted frontend: [care-guide-notes.vercel.app](https://care-guide-notes.vercel.app). Backend API: [care-guide-notes-api.onrender.com/api/posts](https://care-guide-notes-api.onrender.com/api/posts); its base path is `/api`.
+
 ## Run locally
 
 Start the backend using its README and private `.env`. From this frontend folder run:
@@ -12,9 +14,9 @@ python -m http.server 5500 --bind 127.0.0.1
 
 Open **http://localhost:5500**. Serve this directory only; the parent directory can contain private backend configuration. If Python is unavailable, use another static HTTP server confined to this folder. Opening `index.html` directly as a file does not provide the HTTP origin required by the API's CORS policy.
 
-`config.js` contains the public API base URL, initially `http://localhost:3000/api`. Backend `FRONTEND_ORIGIN` must exactly equal `http://localhost:5500` (scheme, hostname and port). `localhost` and `127.0.0.1` are different origins. Configure the final HTTPS API base and exact frontend origin when deploying; never put database credentials, a JWT signing secret or Admin passwords in frontend files. All files in this folder are public.
+For local development, set `API_BASE_URL` in `config.js` to `http://localhost:3000/api` and the local backend's `FRONTEND_ORIGIN` to `http://localhost:5500` (scheme, hostname and port). The committed configuration targets the hosted API. Restore its HTTPS URL before publishing local changes. `localhost` and `127.0.0.1` are different origins. Never put database credentials, a JWT signing secret or Admin passwords in frontend files. All files in this folder are public.
 
-When this frontend is served from a non-local hostname, the request helper refuses a non-HTTPS or loopback API URL and displays a configuration message before sending any API request. Set `API_BASE_URL` in `config.js` to the real public HTTPS backend URL ending in `/api`, then verify registration/login, private notes, Admin views and public posts on the deployed site. This guard does not supply a live backend URL; deployment and both final addresses are still pending.
+When this frontend is served from a non-local hostname, the request helper refuses a non-HTTPS or loopback API URL and displays a configuration message before sending any API request. The guard checks configuration; it does not establish backend availability. Verify registration/login, private notes, Admin views and public posts after the API is running.
 
 ## Functionality
 
@@ -56,9 +58,11 @@ List pages request 20 records; the API validates and caps limits independently. 
 
 ## Deployment
 
-Upload this directory to a static host. Set `API_BASE_URL` in `config.js` to the public HTTPS backend URL including `/api`, then set the backend's `FRONTEND_ORIGIN` to this site's exact HTTPS origin. There is no build command. Ensure the host serves `.js` modules with a JavaScript MIME type.
+The Vercel project `care-guide-notes` is connected to this repository. Use the **Other** framework preset, repository root `.`, no build command and root output. The application consists of `index.html`, `app.js`, `styles.css` and `config.js`; there is no package installation or build step. Pushes to `main` can deploy through the connected Git integration.
 
-The live frontend and backend addresses are not configured yet. After configuring them, run the integration checks above from the hosted site. Keep database connection strings, JWT signing secrets and Admin credentials out of this repository.
+`API_BASE_URL` is `https://care-guide-notes-api.onrender.com/api`. The Render backend must allow exactly `https://care-guide-notes.vercel.app` through `FRONTEND_ORIGIN`. Ensure the host serves `.js` modules with a JavaScript MIME type. Keep database connection strings, JWT signing secrets and Admin credentials out of this repository.
+
+The hosted integration supports registration/login, private note saving, persistent sessions, logout and public pagination. The API enforces ownership and Admin permissions independently of the browser. Run the integration checks above after configuration changes. Render's free instance can delay requests after inactivity.
 
 ## Troubleshooting
 
@@ -70,7 +74,3 @@ The live frontend and backend addresses are not configured yet. After configurin
 | Private views disappear | Token expired, account was deleted or the stored login changed in another tab |
 | Admin controls are missing | Confirm the account's current role; refresh the account after role changes |
 | Sign-in cannot persist | Enable browser storage for this origin |
-<<<<<<< HEAD
-=======
-=======
->>>>>>> fb72270c54ae1531b5e3d690e702250e52d5f37e
