@@ -32,6 +32,7 @@ JWTs are stored in `localStorage` under `secureNotesToken`. A token survives rel
 
 Any script executing in this origin can read a stored token. Plain text rendering (`textContent`), no third-party scripts and no HTML injection reduce exposure but do not make localStorage immune to XSS or compromised hosting. Use HTTPS for deployment. Moving tokens to HttpOnly cookies would also require a deliberate CSRF and backend transport design. Browser storage must be enabled for persistent sign-in. Password recovery and email delivery are outside the application's current scope.
 
+<<<<<<< HEAD
 ## Project files
 
 | File | Purpose |
@@ -70,3 +71,5 @@ The live frontend and backend addresses are not configured yet. After configurin
 | Private views disappear | Token expired, account was deleted or the stored login changed in another tab |
 | Admin controls are missing | Confirm the account's current role; refresh the account after role changes |
 | Sign-in cannot persist | Enable browser storage for this origin |
+=======
+>>>>>>> 142115919ba3a8c523e6e371b6b7a6d43a426df6
