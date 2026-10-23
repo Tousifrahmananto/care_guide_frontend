@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secure Notes</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Secure Notes</h1>
+    <p id="session">Not signed in.</p>
+    <button id="logout" type="button" hidden>Log out</button>
+    <button id="refresh-session" type="button" data-private hidden>Refresh account</button>
+  </header>
+  <nav aria-label="Workspace">
+    <button type="button" data-view-target="notes" data-private hidden>My notes</button>
+    <button type="button" data-view-target="posts" aria-current="page">Public posts</button>
+    <button type="button" data-view-target="users" data-admin hidden>People</button>
+    <button type="button" data-view-target="admin-notes" data-admin hidden>All notes</button>
+    <button type="button" data-view-target="groups" data-admin hidden>Interests</button>
+    <button type="button" data-view-target="account">Account</button>
+  </nav>
+  <p id="message" role="status" aria-live="polite">Ready.</p>
+  <section data-view="account" hidden>
+  <div id="auth">
+    <div>
+    <h2>Log in</h2>
+    <form id="login-form">
+      <label>Email <input name="email" type="email" autocomplete="username" required></label>
+      <label>Password <input name="password" type="password" autocomplete="current-password" required></label>
+      <button>Log in</button>
+    </form>
+    </div>
+    <div>
+    <h2>Register</h2>
+    <form id="register-form">
+      <label>Name <input name="name" autocomplete="name" required></label>
+      <label>Email <input name="email" type="email" autocomplete="email" required></label>
+      <label>Password <input name="password" type="password" autocomplete="new-password" required></label>
+      <p>Passwords need at least 8 characters.</p>
+      <fieldset><legend>Interests (optional, up to 20)</legend>
+        <div id="register-interests"></div>
+        <button type="button" data-add-interest="register-interests">Add interest</button>
+      </fieldset>
+      <button>Register</button>
+    </form>
+    </div>
+  </div>
+  <div data-private hidden>
+    <h2>My profile</h2>
+    <form id="profile-form">
+      <label>Name <input name="name" required></label>
+      <fieldset><legend>Interests</legend>
+        <div id="profile-interests"></div>
+        <button type="button" data-add-interest="profile-interests">Add interest</button>
+      </fieldset>
+      <button>Save profile</button>
+    </form>
+  </div>
+  </section>
+  <section data-view="notes" hidden>
+    <h2>My notes</h2>
+    <form id="note-form">
+      <input name="id" type="hidden">
+      <label>Title <input name="title" required></label>
+      <label>Content <textarea name="content" rows="4"></textarea></label>
+      <button>Save note</button>
+      <button id="new-note" type="button">New note / cancel edit</button>
+    </form>
+    <button id="refresh-notes" type="button">Refresh my notes</button>
+    <div id="own-notes"></div>
+  </section>
+  <div id="admin" data-admin hidden>
+  <section data-view="users" hidden>
+    <h2>People</h2>
+    <p>Create an account or select a person below to edit their details.</p>
+    <form id="user-form">
+      <input name="id" type="hidden">
+      <label>Name <input name="name" required></label>
+      <label>Email <input name="email" type="email" autocomplete="off" required></label>
+      <label>Password <input name="password" type="password" autocomplete="new-password" required></label>
+      <p class="hint">Required for a new user; leave blank when editing to keep their password.</p>
+      <label>Role <select name="role"><option value="user">User</option><option value="admin">Admin</option></select></label>
+      <fieldset><legend>Interests</legend>
+        <div id="user-interests"></div>
+        <button type="button" data-add-interest="user-interests">Add interest</button>
+      </fieldset>
+      <button>Save user</button>
+      <button id="new-user" type="button">New user / cancel edit</button>
+    </form>
+    <button id="refresh-admin" type="button">Refresh Admin views</button>
+    <div id="users"></div>
+  </section>
+  <section data-view="admin-notes" hidden>
+    <h2>All notes</h2>
+    <form id="admin-notes-form">
+      <label>Owner ID (optional) <input name="ownerId" pattern="[0-9a-fA-F]{24}"></label>
+      <button>Filter notes</button>
+    </form>
+    <div id="admin-notes"></div>
+  </section>
+  <section data-view="groups" hidden>
+    <h2>Interests</h2>
+    <p>Browse each group's members. Next members continues that group only.</p>
+    <form id="interests-form">
+      <label>Interest (optional) <textarea name="interest" rows="1"></textarea></label>
+      <button>Filter groups</button>
+    </form>
+    <div id="groups"></div>
+  </section>
+  </div>
+  <section data-view="posts">
+    <h2>Public posts</h2>
+    <div data-private hidden>
+    <h3>Write a post</h3>
+    <form id="post-form">
+      <label>Title <input name="title" required></label>
+      <label>Content <textarea name="content" rows="4" required></textarea></label>
+      <button>Publish post</button>
+    </form>
+    </div>
+    <button id="refresh-posts" type="button">Refresh public posts</button>
+    <div id="posts"></div>
+    <h2>Posts by user</h2>
+    <form id="author-form">
+      <label>Author ID <input name="userId" pattern="[0-9a-fA-F]{24}" required></label>
+      <button>Find posts</button>
+    </form>
+    <div id="author-posts"></div>
+  </section>
+</main>
+</body>
+</html>
